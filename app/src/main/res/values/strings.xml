@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">متصفحي</string>
+    
+    <string name="home">الرئيسية</string>
+    <string name="search">البحث</string>
+    <string name="settings">الإعدادات</string>
+    
+    <string name="search_hint">ابحث أو اكتب عنوان…</string>
+    <string name="daily_suggestions">⚡ الاقتراحات اليومية</string>
+    
+    <string name="loading">جاري التحميل…</string>
+    <string name="no_content">لم يتم العثور على محتوى</string>
+    
+    <string name="play">تشغيل</string>
+    <string name="pause">إيقاف</string>
+    <string name="forward">تقديم</string>
+    <string name="rewind">ترجيع</string>
+    <string name="fullscreen">ملء الشاشة</string>
+</resources>
