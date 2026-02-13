@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText urlBar;
     private ProgressBar progressBar;
     private BottomNavigationView bottomNav;
+    private View topBar;
+    private HomeFragment homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         setupWebView();
         setupUrlBar();
         setupBottomNav();
-
-        webView.loadUrl("https://www.google.com");
+        
+        showHome();
     }
 
     private void initViews() {
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         urlBar = findViewById(R.id.urlBar);
         progressBar = findViewById(R.id.progressBar);
         bottomNav = findViewById(R.id.bottomNav);
+        topBar = findViewById(R.id.topBar);
+        homeFragment = new HomeFragment();
     }
 
     private void setupWebView() {
@@ -58,10 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                 String url = urlBar.getText().toString().trim();
                 if (!url.isEmpty()) {
-                    if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                        url = "https://" + url;
-                    }
-                    webView.loadUrl(url);
+                    loadUrl(UrlHelper.normalizeUrl(url));
                 }
                 return true;
             }
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
-                webView.loadUrl("https://www.google.com");
+                showHome();
                 return true;
             } else if (id == R.id.nav_search) {
                 urlBar.requestFocus();
@@ -84,10 +85,27 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
     }
+    
+    private void showHome() {
+        webView.setVisibility(View.GONE);
+        getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, homeFragment)
+            .commit();
+    }
+    
+    public void loadUrl(String url) {
+        webView.setVisibility(View.VISIBLE);
+        getSupportFragmentManager()
+            .beginTransaction()
+            .remove(homeFragment)
+            .commit();
+        webView.loadUrl(url);
+    }
 
     @Override
     public void onBackPressed() {
-        if (webView.canGoBack()) {
+        if (webView.getVisibility() == View.VISIBLE && webView.canGoBack()) {
             webView.goBack();
         } else {
             super.onBackPressed();
@@ -101,4 +119,4 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onDestroy();
     }
-                  }
+    }
