@@ -7,7 +7,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText urlBar;
     private ProgressBar progressBar;
     private BottomNavigationView bottomNav;
-    private View topBar;
     private HomeFragment homeFragment;
 
     @Override
@@ -37,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         urlBar = findViewById(R.id.urlBar);
         progressBar = findViewById(R.id.progressBar);
         bottomNav = findViewById(R.id.bottomNav);
-        topBar = findViewById(R.id.topBar);
         homeFragment = new HomeFragment();
     }
 
@@ -78,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (id == R.id.nav_search) {
                 urlBar.requestFocus();
-                return true;
-            } else if (id == R.id.nav_settings) {
                 return true;
             }
             return false;
