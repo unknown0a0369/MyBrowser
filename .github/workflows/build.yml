@@ -20,9 +20,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
           
-      - name: منح صلاحيات Gradlew
+      - name: تحميل Gradle Wrapper
+        run: |
+          gradle wrapper --gradle-version 8.2
+          
+      - name: منح صلاحيات
         run: chmod +x gradlew
         
       - name: بناء APK
